@@ -1,0 +1,80 @@
+1.安装预编译语音stylus: cnpm i stylus-loader stylus --save
+2.安装es6-promise: npm install es6-promise --save-dev;
+  安装完毕以后
+  在main.js;
+  import promise from 'es6-promise';promise.polyfill();
+3.安装element-ui:cnpm install element-ui --save;安装以后main.js;
+  import ElementUI from 'element-ui';
+  import 'element-ui/lib/theme-chalk/index.css';
+  Vue.use(ElementUI);
+  如果是在手机端的话：
+     a. 使用mint-ui
+        cnpm install mint-ui --save
+        在main.js中
+        import MintUI from 'mint-ui'
+        import 'mint-ui/lib/style.css'
+        Vue.use(MintUI)
+      b.配置屏幕自适应
+        cnpm i lib-flexible --save
+        然后在项目入口文件main.js里引入lib-flexible
+        import 'lib-flexible'
+        记得配置meta标签,在index.html文件当中
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        接着，我们在项目当中写css的时候将px转成rem,我们可以借助px2rem这个工具，也是同样要安装
+
+        cnpm i px2rem-loader --save-dev
+
+        然后就是配置这个工具，由于是loader文件，所有的loader文件都是在until.js文件里的一个方法生成的．
+
+        我们只要在until.js里找到cssLoader这个对象，在它下面再加一个px2remLoader对象即可
+        https://www.cnblogs.com/zlbrother/p/7823380.html 接下来的配置参考这里
+4.安装axios;cnpm install axios --save;
+5.新建一个文件axios_set.js; 
+  在main.js中 import 'common/config/axios-set.js'
+  // 配置axios：
+  axios.defaults.baseURL = 'https://api.example.com'; // 统一配置前缀地址
+  axios.defaults.headers.common['Authorization'] = AUTH_TOKEN; // 配置token
+    // 添加请求拦截器
+  axios.interceptors.request.use(function (config) {
+      // 在发送请求之前做些什么
+      return config;
+    }, function (error) {
+      // 对请求错误做些什么
+      return Promise.reject(error);
+    });
+
+  // 添加响应拦截器
+  axios.interceptors.response.use(function (response) {
+      // 对响应数据做点什么
+      return response;
+    }, function (error) {
+      // 对响应错误做点什么
+      return Promise.reject(error);
+    });
+
+6:配置vuex:cnpm install vuex --save;main.js下创建store文件夹（store.js）
+    import Vue from 'vue'
+    import Vuex from 'vuex'
+    Vue.use(Vuex)
+
+    export default new Vuex.Store({
+      state: {
+        loading: false
+      },
+      mutations: {
+        loading (state, payload) {
+          this.state.loading = payload
+        }
+      }
+    })
+    // 调用方式：store.commit('loading', false)
+
+    在main.js中
+    // vuex
+    import store from '@/store/store.js'
+    new Vue({
+      ...
+      store,
+      ...
+    })
+
